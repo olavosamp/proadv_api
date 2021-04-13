@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  db:
+    container_name: postgresdb
+    image: postgres:latest
+    restart: always
+    env_file:
+      - project.env
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  web:
+    container_name: backend
+    build:
+        args:
+            - username=docker-user
+            - uid=1000
+            - gid=100
+        context: .
+    command: python manage.py runserver localhost:8000
+    ports:
+      - 8000:8000
+    env_file:
+      - project.env
+    depends_on:
+      - db
+
+volumes:
+    postgres-data:
