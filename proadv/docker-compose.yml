@@ -15,10 +15,6 @@ services:
   web:
     container_name: backend
     build:
-        args:
-            - username=docker-user
-            - uid=1000
-            - gid=100
         context: .
     command: python manage.py runserver localhost:8000
     ports:

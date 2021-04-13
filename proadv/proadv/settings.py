@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import os
 from pathlib import Path
 from proadv.keyconfig import Database, Secrets
 
@@ -76,24 +75,15 @@ WSGI_APPLICATION = 'proadv.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': { # Local Postgres DB
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'proadv',
-    #     'USER': 'olavosamp',
-    #     'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
-    #     'HOST': 'localhost',
-    #     'PORT': '',
-    # }
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": Database.NAME,
         "USER": Database.USER,
         "PASSWORD": Database.PASSWORD,
-        "HOST": Database.HOST,
-        "PORT": Database.PORT,
+        "HOST": "postgresdb",
+        "PORT": 5432,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
