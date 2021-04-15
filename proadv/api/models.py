@@ -6,6 +6,7 @@ class SearchTerm(models.Model):
     class Meta:
         verbose_name = "termo de pesquisa"
         verbose_name_plural = "termos de pesquisa"
+
     term = models.fields.CharField(max_length=100)
     classification = models.fields.CharField(max_length=60)
 
