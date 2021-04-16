@@ -1,33 +1,34 @@
 import json
 
 from api.models import SearchTerm
-from api.utils import get_search_term
-from api.defines import SEARCH_TERM_KEYS
+from api.utils import get_search_term, check_valid_keys
+from api.defines import SEARCH_TERM_KEY_DICT
 
 from django.core.management import BaseCommand
 
 
 class Command(BaseCommand):
-    help = "Imports search term data from a JSON file with format: {classificacao: str, termo: str}"
+    help = "Imports search term data from a JSON file with format: [{classificacao: str, termo: str}, ...]"
 
     def add_arguments(self, parser):
         parser.add_argument('file_path', nargs='+', type=str)
 
     def handle(self, *args, **options):
         path = options['file_path'][0]
-        keys = SEARCH_TERM_KEYS.values()
+        reference_keys = SEARCH_TERM_KEY_DICT.values()
 
         with open(path) as file_handle:
             string_data = file_handle.read()
 
         object_list = []
         for json_data in json.loads(string_data):
-            if not set(keys).issubset(json_data.keys()):
-                print(f"\nUnknown data format: missing any of {list(keys)}\nFile not loaded.")
+            if not check_valid_keys(json_data.keys(), reference_keys):
+                print(f"\nInvalid data format: missing any of {list(reference_keys)}\nFile not loaded.")
+                continue
 
-            term_dict = get_search_term(json_data)
-            new_term = SearchTerm(**term_dict)
+            entry_dict = get_search_term(json_data)
+            new_entry = SearchTerm(**entry_dict)
 
-            object_list.append(new_term)
+            object_list.append(new_entry)
 
         SearchTerm.objects.bulk_create(object_list)
