@@ -1,7 +1,6 @@
 from api.models import Publication, SearchTerm
 
 from django.core.management import BaseCommand
-from django.db.models import F
 
 
 class Command(BaseCommand):

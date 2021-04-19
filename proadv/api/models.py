@@ -15,7 +15,5 @@ class Publication(models.Model):
         verbose_name = "publicação"
         verbose_name_plural = "publicações"
 
-        # indexes = [GinIndex(fields=['data'])]
-
     terms = models.ManyToManyField(SearchTerm, related_name="publications")
     data = models.JSONField(null=True)
