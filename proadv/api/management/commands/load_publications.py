@@ -6,6 +6,13 @@ from api.defines import PUBLICATION_KEYS
 
 from django.core.management import BaseCommand
 
+def make_publication(json_data):
+    return Publication(
+        date=json_data["Data"],
+        content=json_data["Conteudo"],
+        observation=json_data["Observacao"],
+        code=json_data["DiarioCodigo"]
+    )
 
 class Command(BaseCommand):
     help = "Imports publication data from a JSON file with format: [{key:value}, ...]. "+\
@@ -27,7 +34,7 @@ class Command(BaseCommand):
                 print(f"\nInvalid data format: missing any of {PUBLICATION_KEYS}\nFile not loaded.")
                 return
 
-            new_entry = Publication(data=json_data)
+            new_entry = make_publication(json_data)
 
             object_list.append(new_entry)
 

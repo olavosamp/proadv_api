@@ -7,13 +7,16 @@ class SearchTerm(models.Model):
         verbose_name = "termo de pesquisa"
         verbose_name_plural = "termos de pesquisa"
 
-    classification = models.fields.CharField(max_length=60)
-    term = models.fields.CharField(max_length=100)
+    classification = models.fields.CharField(max_length=60, verbose_name="classificação")
+    term = models.fields.CharField(max_length=100, verbose_name="termo de pesquisa")
 
 class Publication(models.Model):
     class Meta:
         verbose_name = "publicação"
         verbose_name_plural = "publicações"
 
-    terms = models.ManyToManyField(SearchTerm, related_name="publications")
-    data = models.JSONField(null=True)
+    types = models.ManyToManyField(SearchTerm, related_name="publications")
+    date = models.DateTimeField(null=True, verbose_name="data")
+    content = models.TextField(null=True, verbose_name="conteúdo")
+    observation = models.TextField(null=True, verbose_name="observação")
+    code = models.IntegerField(null=True, verbose_name="código do diário")
