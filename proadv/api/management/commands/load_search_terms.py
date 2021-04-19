@@ -17,9 +17,10 @@ class Command(BaseCommand):
         path = options['file_path'][0]
         reference_keys = SEARCH_TERM_KEY_DICT.values()
 
+        print(f"\nLoading search terms from \n{path}")
+
         with open(path) as file_handle:
             string_data = file_handle.read()
-
         object_list = []
         for json_data in json.loads(string_data):
             if not check_valid_keys(json_data.keys(), reference_keys):
@@ -31,4 +32,7 @@ class Command(BaseCommand):
 
             object_list.append(new_entry)
 
+        print(f"\nFound {len(object_list)} search term objects.")
         SearchTerm.objects.bulk_create(object_list)
+
+        print(f"Import finished.")

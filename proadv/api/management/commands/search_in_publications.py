@@ -7,10 +7,16 @@ class Command(BaseCommand):
     help = "Search publications for search terms. If found, each term is added to the publication."
 
     def handle(self, *args, **options):
-        if SearchTerm.objects.count() < 1:
+        print(f"\nSearching search terms in publications.")
+
+        num_search_terms = SearchTerm.objects.count()
+        print(f"\nFound {num_search_terms} search terms.")
+        if num_search_terms < 1:
             raise ValueError("No search terms found.")
 
-        if Publication.objects.count() < 1:
+        num_publications = Publication.objects.count()
+        print(f"\nFound {num_publications} publications.")
+        if num_publications < 1:
             raise ValueError("No publications found.")
 
         for search_term in SearchTerm.objects.all():
@@ -20,5 +26,5 @@ class Command(BaseCommand):
             print(f"Found {len(publications_qs)} matches")
 
             if publications_qs.count() > 0:
-                print("Adding publications to term")
+                print("Adding search term to publications.")
                 search_term.publications.add(*publications_qs)

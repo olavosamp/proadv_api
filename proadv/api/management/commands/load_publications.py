@@ -8,14 +8,15 @@ from django.core.management import BaseCommand
 
 
 class Command(BaseCommand):
-    help = "Imports publication data from a JSON file with format: [{key:value}, ...]."+\
-        f"Must contain the following keys: {PUBLICATION_KEYS}."
+    help = "Imports publication data from a JSON file with format: [{key:value}, ...]. "+\
+        "Must contain the following keys: {}.".format(PUBLICATION_KEYS)
 
     def add_arguments(self, parser):
         parser.add_argument('file_path', nargs='+', type=str)
 
     def handle(self, *args, **options):
         path = options['file_path'][0]
+        print(f"\nLoading publications from \n{path}")
 
         with open(path) as file_handle:
             string_data = file_handle.read()
@@ -30,4 +31,7 @@ class Command(BaseCommand):
 
             object_list.append(new_entry)
 
+        print(f"\nFound {len(object_list)} publication objects.")
         Publication.objects.bulk_create(object_list)
+
+        print(f"Import finished.")
