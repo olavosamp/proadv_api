@@ -5,9 +5,10 @@ from .models import Publication, SearchTerm
 class PublicationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Publication
-        fields = ['terms', 'data']
+        fields = ['id', 'data']
+
 
 class SearchTermSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = SearchTerm
-        fields = ['classification', 'term']
+        fields = ['id', 'classification', 'term']
