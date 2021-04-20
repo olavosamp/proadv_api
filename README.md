@@ -7,8 +7,9 @@ Docker, Docker-compose
 
 ### Instalação
 1. Clone ou baixe o repositório ``git clone https://github.com/olavosamp/proadv_api.git``
-2. Construa o container do Docker na pasta [proadv/](https://github.com/olavosamp/proadv_api/tree/main/proadv) ``docker up --build``
-3. Pronto! Interaja com a aplicação via API ou executando comandos do Django via terminal.
+2. Copie o arquivo de configuração de ambiente ``project.env`` para a pasta [proadv/](https://github.com/olavosamp/proadv_api/tree/main/proadv) (onde está o Dockerfile)
+3. Construa o container do Docker executando o comando ``docker up --build`` na pasta [proadv/](https://github.com/olavosamp/proadv_api/tree/main/proadv)
+4. Pronto! Interaja com a aplicação via API ou executando comandos do Django via terminal.
     
     a. (Em um novo terminal), execute comandos para o servidor Django ``docker exec django python manage.py <commando>``
     
